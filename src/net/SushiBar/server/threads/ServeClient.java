@@ -30,7 +30,7 @@ public class ServeClient extends Thread {
 
 
   public static synchronized void removeFood(String order) {
-    clientList.removeIf(dish -> dish.equalsIgnoreCase(order.trim().toLowerCase()));
+    clientList.removeIf(dish -> dish.equalsIgnoreCase(order.trim()));
   }
 
   public static void addFood() {
@@ -67,8 +67,25 @@ public class ServeClient extends Thread {
 
   @Override
   public void run() {
-    // TODO Auto-generated method stub
-    super.run();
+    try {
+      while (true) {
+        String order = clientInputStream.readUTF();
+
+        if (!clientList.contains(order.trim())) {
+          clientOutputStream.writeUTF("ERROR: El plato no existe. Intente de nuevo.");
+          clientOutputStream.flush();
+          sendMenu();
+        } else {
+          System.out.println(this.name + " ha pedido: " + order);
+          removeFood(order);
+          clientOutputStream.writeUTF("- Pedido confirmado: " + order);
+          clientOutputStream.flush();
+          sendMenu();
+        }
+      }
+    } catch (IOException ioe) {
+      System.out.println("El cliente " + this.name + " se ha marchado ...");
+    }
   }
 
 }

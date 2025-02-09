@@ -20,9 +20,7 @@ public class ServeClient extends Thread {
       this.clientInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
       this.clientOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 
-      addFood();
       this.name = clientInputStream.readUTF();
-      sendMenu();
     } catch (IOException e) {
       System.out.println("Error en el constructor de ServerClients.");
     }
@@ -41,7 +39,6 @@ public class ServeClient extends Thread {
     clientList.add("Takoyaki");
     clientList.add("Sashimi");
     clientList.add("Gunkan");
-    clientList.add("Futomaki");
     clientList.add("Futomaki");
   }
 
@@ -68,6 +65,7 @@ public class ServeClient extends Thread {
   @Override
   public void run() {
     try {
+      sendMenu();
       while (true) {
         String order = clientInputStream.readUTF();
 

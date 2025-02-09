@@ -12,6 +12,7 @@ public class ServerApp {
     System.out.println("       Sushi Bar      ");
     System.out.println("******   OPEN   ******");
 
+    ServeClient.addFood();
     while (true) {
       Socket clientSocket = serverSocket.accept();
       System.out.println("Ha entrado un cliente al restaurante");

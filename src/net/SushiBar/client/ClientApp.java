@@ -22,6 +22,8 @@ public class ClientApp {
     System.out.println("Bienvenido a Sushi bar!");
     System.out.println("Introduce tu nombre para ver la carta:");
     String name = scanner.nextLine();
+    clientOutputStream.writeUTF(name);
+    clientOutputStream.flush();
 
     int exit = 1;
     while (exit != 0) {
